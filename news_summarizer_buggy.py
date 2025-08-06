@@ -58,6 +58,14 @@ def get_date_range(filter_arr):
             from_date_str = input("Enter the start date to search from in (YYYY-MM-DD) format\n")
             try:
                 from_date_datetime = datetime.strptime(from_date_str,"%Y-%m-%d")
+                #Date entered is ahead of today's date.
+                if from_date_datetime.date() > datetime.today().date():
+                    while from_date_datetime.date() > datetime.today().date():
+                        from_date_str = input("Date entered is ahead of today's date. Please enter another date in (YYYY-MM-DD format)\n")
+                        try:
+                            from_date_datetime = datetime.strptime(from_date_str,"%Y-%m-%d")
+                        except ValueError as new_from_ve:
+                            logging.exception("Invalid date entered. Try again by providing the correct date in the specified format")
                 print(f"From Date: {from_date_datetime.date()}")
                 break
             except ValueError as date_ve:
@@ -67,6 +75,13 @@ def get_date_range(filter_arr):
             to_date_str = input("Enter the end date of the search in (YYYY-MM-DD) format\n")
             try:
                 to_date_datetime = datetime.strptime(to_date_str,"%Y-%m-%d")
+                if to_date_datetime.date() > datetime.today().date():
+                    while to_date_datetime.date() > datetime.today().date():
+                        to_date_str = input("Date entered is ahead of today's date. Please enter another date in (YYYY-MM-DD format)\n")
+                        try:
+                            to_date_datetime = datetime.strptime(to_date_str,"%Y-%m-%d")
+                        except ValueError as new_to_ve:
+                            logging.exception("Invalid date entered. Try again by providing the correct date in the specified format")
                 print(f"To Date: {to_date_datetime.date()}")
                 if to_date_datetime < from_date_datetime:
                     while to_date_datetime < from_date_datetime:
